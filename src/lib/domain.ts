@@ -42,6 +42,25 @@ export type AlpacaTrade = {
   strategy: string;
 };
 
+export type RobinhoodAccountSnapshot = {
+  id: string;
+  accountName: string;
+  accountType: string;
+  maskedAccountNumber: string;
+  accountValue: number;
+  cash: number;
+  buyingPower: number;
+  equityValue: number;
+  observedAt: string;
+};
+
+export type RobinhoodAccountTotals = {
+  accountValue: number;
+  cash: number;
+  buyingPower: number;
+  equityValue: number;
+};
+
 export type IncomeSummary = {
   grossIncome: number;
   netIncome: number;

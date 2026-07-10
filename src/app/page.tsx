@@ -1,15 +1,25 @@
 import { IncomeEventsTable } from "@/components/income-events-table";
 import { MetricCard } from "@/components/metric-card";
-import { getAlpacaTrades, getIncomeEvents, getIncomeSources } from "@/lib/data-sources";
+import { RobinhoodAccountTable } from "@/components/robinhood-account-table";
+import {
+  buildRobinhoodAccountTotals,
+  getAlpacaTrades,
+  getIncomeEvents,
+  getIncomeSources,
+  getRobinhoodAccountSnapshots,
+} from "@/lib/data-sources";
+import { formatCurrency } from "@/lib/format";
 import { buildIncomeSummary } from "@/lib/reporting";
 
 export default async function OverviewPage() {
-  const [events, trades, sources] = await Promise.all([
+  const [events, trades, sources, robinhoodSnapshots] = await Promise.all([
     getIncomeEvents(),
     getAlpacaTrades(),
     getIncomeSources(),
+    getRobinhoodAccountSnapshots(),
   ]);
   const summary = buildIncomeSummary(events, trades);
+  const robinhoodTotals = buildRobinhoodAccountTotals(robinhoodSnapshots);
 
   return (
     <>
@@ -22,7 +32,7 @@ export default async function OverviewPage() {
             shared event model for Robinhood and company streams.
           </p>
         </div>
-        <span className="status-pill">Seed data</span>
+        <span className="status-pill">Live snapshots</span>
       </header>
 
       <section className="grid metric-grid" aria-label="Income summary">
@@ -43,6 +53,37 @@ export default async function OverviewPage() {
           format="percent"
           helper={`${summary.tradeCount} Alpaca records`}
         />
+      </section>
+
+      <section className="grid metric-grid section-grid" aria-label="Robinhood account summary">
+        <MetricCard
+          label="Robinhood total"
+          value={robinhoodTotals.accountValue}
+          helper="Across 4 verified accounts"
+        />
+        <MetricCard label="Cash" value={robinhoodTotals.cash} helper="Available cash balance" />
+        <MetricCard
+          label="Buying power"
+          value={robinhoodTotals.buyingPower}
+          helper="Current buying power"
+        />
+        <MetricCard
+          label="Equity value"
+          value={robinhoodTotals.equityValue}
+          helper="Positions across accounts"
+        />
+      </section>
+
+      <section className="card section-grid">
+        <div className="toolbar">
+          <div>
+            <h2>Robinhood account snapshots</h2>
+            <p className="muted">
+              Current verified balances, totaling {formatCurrency(robinhoodTotals.accountValue)}.
+            </p>
+          </div>
+        </div>
+        <RobinhoodAccountTable snapshots={robinhoodSnapshots} />
       </section>
 
       <section className="grid two-column section-grid">

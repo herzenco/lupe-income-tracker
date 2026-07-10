@@ -10,6 +10,9 @@ Use `.env.local` for local development and encrypted project environment variabl
 ALPACA_API_KEY=
 ALPACA_SECRET_KEY=
 ALPACA_BASE_URL=https://paper-api.alpaca.markets
+ROBINHOOD_ACCOUNT_SYNC_ENABLED=false
+ROBINHOOD_CLIENT_ID=
+ROBINHOOD_CLIENT_SECRET=
 DATABASE_URL=
 ```
 
@@ -72,7 +75,23 @@ create table alpaca_trades (
 
 ## Robinhood
 
-Robinhood should be treated as an import source first unless a stable authorized API is chosen. The practical path is CSV or statement import:
+The current Robinhood dashboard uses verified account snapshots in `src/lib/sample-data.ts`.
+These values are the source of truth until a server-side live pull is enabled.
+
+Current verified account value total: `$257,785.84`.
+
+Future live pull path:
+
+1. Keep the UI consuming `RobinhoodAccountSnapshot` records from `src/lib/domain.ts`.
+2. Add a server-only Robinhood adapter behind `getRobinhoodAccountSnapshots()`.
+3. Read encrypted credentials or OAuth tokens lazily at request or sync time.
+4. Fetch account profile and balance payloads for every linked Robinhood account.
+5. Persist raw payloads in `raw_source_records` with account ID and observed timestamp.
+6. Normalize account name, type, masked number, account value, cash, buying power, and equity value.
+7. Reconcile the summed account value against Robinhood statements before formal reporting.
+
+Robinhood should also be treated as an import source for income activity unless a stable
+authorized API is chosen. The practical income path is CSV or statement import:
 
 1. Add an upload/import route for Robinhood CSV exports.
 2. Preserve raw rows in `raw_source_records`.

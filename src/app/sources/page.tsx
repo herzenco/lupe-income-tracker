@@ -37,6 +37,7 @@ export default async function SourcesPage() {
           <ol className="steps">
             <li>Add encrypted environment variables for provider credentials.</li>
             <li>Replace sample adapters in <code>src/lib/data-sources.ts</code>.</li>
+            <li>Pull Robinhood account snapshots through the server-only adapter.</li>
             <li>Persist normalized income events before rendering dashboard summaries.</li>
             <li>Add scheduled sync jobs and idempotent source record IDs.</li>
             <li>Reconcile imported totals against broker statements before tax reporting.</li>

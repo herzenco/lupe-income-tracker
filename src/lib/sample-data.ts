@@ -1,4 +1,4 @@
-import type { AlpacaTrade, IncomeEvent, IncomeSource } from "./domain";
+import type { AlpacaTrade, IncomeEvent, IncomeSource, RobinhoodAccountSnapshot } from "./domain";
 
 export const incomeSources: IncomeSource[] = [
   {
@@ -12,8 +12,8 @@ export const incomeSources: IncomeSource[] = [
     id: "robinhood",
     name: "Robinhood",
     type: "brokerage",
-    status: "planned",
-    description: "Future import path for dividends, interest, and realized gains.",
+    status: "live",
+    description: "Verified account snapshots for cash, buying power, and equity value.",
   },
   {
     id: "company",
@@ -84,6 +84,53 @@ export const alpacaTrades: AlpacaTrade[] = [
     realizedPnl: 233.8,
     fees: 0.2,
     strategy: "momentum-harvest",
+  },
+];
+
+export const robinhoodAccountSnapshots: RobinhoodAccountSnapshot[] = [
+  {
+    id: "robinhood-agentic-individual-cash",
+    accountName: "Agentic",
+    accountType: "Individual cash",
+    maskedAccountNumber: "••••3902",
+    accountValue: 760.74,
+    cash: 297.55,
+    buyingPower: 297.55,
+    equityValue: 463.19,
+    observedAt: "2026-07-10T00:00:00.000-04:00",
+  },
+  {
+    id: "robinhood-individual-margin-default",
+    accountName: "Default",
+    accountType: "Individual margin",
+    maskedAccountNumber: "••••6277",
+    accountValue: 44955.56,
+    cash: 0.03,
+    buyingPower: 0.03,
+    equityValue: 44955.53,
+    observedAt: "2026-07-10T00:00:00.000-04:00",
+  },
+  {
+    id: "robinhood-herzen-custodial-utma-cash",
+    accountName: "Herzen",
+    accountType: "Custodial UTMA cash",
+    maskedAccountNumber: "••••4169",
+    accountValue: 106034.76,
+    cash: 0,
+    buyingPower: 0,
+    equityValue: 106034.76,
+    observedAt: "2026-07-10T00:00:00.000-04:00",
+  },
+  {
+    id: "robinhood-vania-custodial-utma-cash",
+    accountName: "Vania",
+    accountType: "Custodial UTMA cash",
+    maskedAccountNumber: "••••1328",
+    accountValue: 106034.78,
+    cash: 0,
+    buyingPower: 0,
+    equityValue: 106034.78,
+    observedAt: "2026-07-10T00:00:00.000-04:00",
   },
 ];
 

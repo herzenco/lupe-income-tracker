@@ -1,6 +1,6 @@
 # Income Dashboard
 
-Practical scaffold for a personal income dashboard. The first slice reports Alpaca trade records and realized P&L from seed data. The data model is intentionally source-agnostic so Robinhood income data and company income streams can be added later without rebuilding the UI.
+Practical scaffold for a personal income dashboard. The first slice reports Alpaca trade records and realized P&L from seed data, plus verified Robinhood account snapshots totaling `$257,785.84`. The data model is intentionally source-agnostic so Robinhood income data and company income streams can be added later without rebuilding the UI.
 
 ## Stack recommendation
 
@@ -34,11 +34,12 @@ Useful routes:
 
 - `/` income overview
 - `/alpaca` Alpaca trade history and reporting
+- `/robinhood` Robinhood account snapshots
 - `/sources` source roadmap and live-data checklist
 - `/api/reports/alpaca` JSON report endpoint
 
 ## Current status
 
 - Uses seed Alpaca trades and dividend placeholder events.
-- Shows normalized income overview, Alpaca reporting, source inventory, and a JSON report endpoint.
-- Documents live ingestion steps for Alpaca, Robinhood, and company income.
+- Shows normalized income overview, Alpaca reporting, Robinhood account snapshots, source inventory, and a JSON report endpoint.
+- Documents live ingestion steps for Alpaca, Robinhood account snapshots, Robinhood income activity, and company income.
